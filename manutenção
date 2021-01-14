@@ -10,7 +10,7 @@ cls
 mode con:cols=60 lines=20
 system("mode con:cols=60 lines=20");
 cls
-color 2
+color 4
 
 date /t
 
