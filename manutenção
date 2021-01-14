@@ -1,8 +1,12 @@
-################################################
-#######     Projeto de Arquivos .bat   #########
-#######  Compartilhando Conhecimento   #########
-#######  Criado por Edinei Ferreira    #########
-################################################
+#################################################
+#   Projeto de Arquivos .bat   		            #
+#  	Compartilhando Conhecimento   		        #
+#  	Criado por Edinei Ferreira    		        #
+#  	Livre para Ser Editador 		            #
+#  	mantendo os credito			                #
+#	https://github.com/Edineidf		            #
+#  	Lembre-se de mudar a extenção .Bat	        #
+#################################################
 
 @echo off
 cls
