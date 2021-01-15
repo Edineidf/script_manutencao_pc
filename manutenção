@@ -49,7 +49,8 @@ goto menu
 
 :opcao2
 cls
-xcopy C:\Users\%username%\*.* C:\Users\%username%\Desktop\Backup-%username% /s /e /y /h /C
+ECHO *** COPIANDO DADOS - %username% ***
+robocopy "C:\users\%username%"    "C:\Backup-%username% %date:~6,4%-%date:~3,2%-%date:~0,2%" 	/E /ZB /COPYALL /R:0 /W:0 /V /NP /ETA /LOG:C:\%computername%.log
 echo ==================================
 echo *      Backup concluido           *
 echo ==================================
