@@ -3,10 +3,10 @@ Scripts Básico para auxiliar.
 
 # REDES =======
 # Um Menu para facilitar a identificação da tarefa
-echo  1 - Verificando Ip da Maquina
-echo. 2 - Limpar Cache de DNS
-echo. 3 - Limpando endereco IP
-echo  4 - Novo Endereco IP
+  1 - Verificando Ip da Maquina
+  2 - Limpar Cache de DNS
+  3 - Limpando endereco IP
+  4 - Novo Endereco IP
 
 1 - Ele apenas exibe a configuração de ip atual que sua maquina esta recebendo por um servidor DHCP.
 
