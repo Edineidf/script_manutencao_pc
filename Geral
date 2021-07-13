@@ -1,0 +1,421 @@
+#################################################
+#   Projeto de Arquivos .bat   		            
+#  	Compartilhando Conhecimento   		        
+#  	Criado por Edinei Ferreira    		        
+#  	Livre para Ser Editador 		            
+#  	mantendo os credito                
+#	https://github.com/Edineidf	        
+#  	Lembre-se de mudar a extenção .Bat	
+#################################################
+
+@echo off
+title Ferramenta Manutencao Sisconsult...
+color a
+:home
+mode 60, 5
+set /a trt=%trt%+1
+cls
+echo.
+echo.
+@echo        Cargando... ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ^> %trt%
+echo.        
+if %trt%==100 goto menu
+goto home
+
+cls
+:menu
+mode 120, 30
+cls
+color a
+@echo               ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+@echo               º    Sisconsult Informatica     º
+@echo               º     www.sisconsult.com.br     º
+@echo               º       Edinei Ferreira         º
+@echo               ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+@echo       ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»      
+@echo       º        Contato: edinei@sisconsult.com.br              º
+@echo       ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+echo.
+echo               Data: %date% Hora: %time%
+echo.
+echo       Computador: %computername%        Usuario: %username%
+echo.
+echo                              MENU TAREFAS
+echo  ======================================================================
+echo  * 1 Realizar Backup Pasta Usuario  * 11 Limpar Lixeira
+echo  * 2 Informacao do Sistema          * 12 Limpar Arquivo TEMPORARIO
+echo  * 3 Auditoria Evento do Sistema    * 13 Limpeza de Disco
+echo  * 4 Monitor de Desempenho          * 14 Reparar - Arquivos e Windows
+echo  * 5 Lista Servicos Execucao        * 15 Remover Software Mal-Intensionado
+echo  * 6 Abrir Servicos do Windows      * 16 Arquivos e Programas
+echo  * 7 Restauracao de Sistema         * 17 Checar Status do Disco
+echo  * 8 Desgragmentar Disco            * 18 Restabelecer Conexao IP
+echo  * 9 Limpar Navegadores Internet    * 19 Site Sisconsult
+echo  * 10 Reiniciar Computador          * 20 Sair
+echo  ======================================================================
+echo.
+set /p opcao= Escolha uma opcao ? Apenas o numero:
+echo ----------------------------
+if %opcao% equ 1 goto opcao1
+if %opcao% equ 2 goto opcao2
+if %opcao% equ 3 goto opcao3
+if %opcao% equ 4 goto opcao4
+if %opcao% equ 5 goto opcao5
+if %opcao% equ 6 goto opcao6
+if %opcao% equ 7 goto opcao7
+if %opcao% equ 8 goto opcao8
+if %opcao% equ 9 goto opcao9
+if %opcao% equ 10 goto opcao10
+if %opcao% equ 11 goto opcao11
+if %opcao% equ 12 goto opcao12
+if %opcao% equ 13 goto opcao13
+if %opcao% equ 14 goto opcao14
+if %opcao% equ 15 goto opcao15
+if %opcao% equ 16 goto opcao16
+if %opcao% equ 17 goto opcao17
+if %opcao% equ 18 goto opcao18
+if %opcao% equ 19 goto opcao19
+if %opcao% equ 20 goto opcao20
+if %opcao% equ 100 goto opcao100
+msg /v /w * Ops, nao temos Tarefa para %opcao%.!
+cls
+goto menu
+
+:opcao1
+echo =================================================
+echo *      Fazer Backup Pasta do Usuario Logado     *
+echo *      O Backup Ficara em C:\Backup-%username%\ *
+echo =================================================
+ECHO 		*** COPIANDO DADOS - %username% ***
+robocopy "C:\users\%username%"    "C:\Backup-%username% %date:~6,4%-%date:~3,2%-%date:~0,2%" 	/E /ZB /COPYALL /R:0 /W:0 /V /NP /ETA /LOG:C:\%computername%.log
+start C:\%computername%.log
+pause
+goto menu
+
+:opcao2
+echo ==================================
+echo *      Informacao do Sistema     *
+echo *  Consulte na area de trabalho  *
+echo *Arquivo com nome Informacao.txt *
+echo ==================================
+systeminfo > C:\users\%username%\Desktop\informacao.txt
+timeout 3
+goto menu
+
+:opcao3
+echo ==================================
+echo *      Auditoria de Arquivos     *
+echo *   Arquivos log do Windows      *
+echo *  Criado na Area de Trabalho    *
+echo ==================================
+WEVTUtil query-events System /count:20 /rd:true /format:text > c:\users\%username%\Desktop\LogEvent.txt
+WEVTUtil query-events Security /count:20 /rd:true /format:text >> c:\users\%username%\Desktop\LogEvent.txt
+timeout 3
+goto menu
+
+:opcao4
+echo ================================
+echo *  Monitoramento do Sistema    *
+echo ================================
+perfmon
+pause
+goto menu
+
+:opcao5
+echo ======================================
+echo *  Lista Servicos Windows Execucao   *
+echo ======================================
+tasklist
+pause
+goto menu
+
+:opcao6
+echo ================================
+echo *  Abrir Servicos do Windows   *
+echo ================================
+services.msc
+pause
+goto menu
+
+:opcao7
+echo ===================================
+echo *  Abrir Restauracao de Sistema   *
+echo ===================================
+rstrui.exe
+pause
+goto menu
+
+:opcao8
+cls
+echo ==============================================
+echo *          Desfragmentar o disco             *
+echo *          Disco C: desfragmentando...       *
+echo *    Evite usar seu PC enquanto examinamos   *
+echo ==============================================
+defrag c: /f /v
+pause
+goto menu
+
+:opcao9
+echo =================================================
+echo *      Limpar Dados Navegadores de Internet     *
+echo =================================================
+:start
+cls
+%homedrive%
+cd %USERPROFILE%
+cd..
+set profiles=%cd%
+cls
+for /f "tokens=* delims= " %%u in ('dir /b/ad') do (
+cls
+title Deletando %%u COOKIES. . .
+if exist "%profiles%\%%u\cookies" echo Deletando....
+if exist "%profiles%\%%u\cookies" cd "%profiles%\%%u\cookies"
+if exist "%profiles%\%%u\cookies" del *.* /F /S /Q /A: R /A: H /A: A
+
+cls
+title Deletando %%u Temp Files. . .
+if exist "%profiles%\%%u\Local Settings\Temp" echo Deletando....
+if exist "%profiles%\%%u\Local Settings\Temp" cd "%profiles%\%%u\Local Settings\Temp"
+if exist "%profiles%\%%u\Local Settings\Temp" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\Local Settings\Temp" rmdir /s /q "%profiles%\%%u\Local Settings\Temp"
+
+cls
+title Deletando %%u Temp Files. . .
+if exist "%profiles%\%%u\AppData\Local\Temp" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Temp" cd "%profiles%\%%u\AppData\Local\Temp"
+if exist "%profiles%\%%u\AppData\Local\Temp" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Temp" rmdir /s /q "%profiles%\%%u\AppData\Local\Temp"
+
+cls
+title Deletando %%u Temporary Internet Files. . .
+if exist "%profiles%\%%u\Local Settings\Temporary Internet Files" echo Deletando....
+if exist "%profiles%\%%u\Local Settings\Temporary Internet Files" cd "%profiles%\%%u\Local Settings\Temporary Internet Files"
+if exist "%profiles%\%%u\Local Settings\Temporary Internet Files" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\Local Settings\Temporary Internet Files" rmdir /s /q "%profiles%\%%u\Local Settings\Temporary Internet Files"
+
+cls
+title Deletando %%u Temporary Internet Files. . .
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\Temporary Internet Files" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\Temporary Internet Files" cd "%profiles%\%%u\AppData\Local\Microsoft\Windows\Temporary Internet Files"
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\Temporary Internet Files" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\Temporary Internet Files" rmdir /s /q "%profiles%\%%u\AppData\Local\Microsoft\Windows\Temporary Internet Files"
+
+cls
+title Deletando %%u WER Files. . .
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\WER\ReportArchive" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\WER\ReportArchive" cd "%profiles%\%%u\AppData\Local\Microsoft\Windows\WER\ReportArchive"
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\WER\ReportArchive" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\WER\ReportArchive" rmdir /s /q "%profiles%\%%u\AppData\Local\Microsoft\Windows\WER\ReportArchive"
+
+cls
+title Deletando %Systemroot%\Temp
+if exist "%Systemroot%\Temp" echo Deletando....
+if exist "%Systemroot%\Temp" cd "%Systemroot%\Temp"
+if exist "%Systemroot%\Temp" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%Systemroot%\Temp" rmdir /s /q "%Systemroot%\Temp"
+
+cls
+title Deletando %SYSTEMDRIVE%\Temp
+if exist "%SYSTEMDRIVE%\Temp" echo Deletando....
+if exist "%SYSTEMDRIVE%\Temp" cd "%SYSTEMDRIVE%\Temp"
+if exist "%SYSTEMDRIVE%\Temp" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%SYSTEMDRIVE%\Temp" rmdir /s /q "%Systemroot%\Temp"
+
+cls
+title Deletando %%u FIREFOX TEMP. . .
+if exist "%profiles%\%%u\AppData\Local\Mozilla\Firefox\Profiles" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Mozilla\Firefox\Profiles" cd "%profiles%\%%u\AppData\Local\Mozilla\Firefox\Profiles"
+if exist "%profiles%\%%u\AppData\Local\Mozilla\Firefox\Profiles" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Mozilla\Firefox\Profiles" rmdir /s /q "%profiles%\%%u\AppData\Local\Mozilla\Firefox\Profiles"
+
+cls
+title Deletando %%u CHROME TEMP. . .
+if exist "%profiles%\%%u\AppData\Local\Google\Chrome\User Data\Default\Cache" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Google\Chrome\User Data\Default\Cache" cd "%profiles%\%%u\AppData\Local\Google\Chrome\User Data\Default\Cache"
+if exist "%profiles%\%%u\AppData\Local\Google\Chrome\User Data\Default\Cache" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Google\Chrome\User Data\Default\Cache" rmdir /s /q "%profiles%\%%u\AppData\Local\Google\Chrome\User Data\Default\Cache"
+
+cls
+title Deletando %%u EDGE TEMP. . .
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCache" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCache" cd "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCache"
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCache" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCache" rmdir /s /q "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCache"
+
+cls
+title Deletando %%u EDGE COOKIES. . .
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCookies" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCookies" cd "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCookies"
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCookies" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCookies" rmdir /s /q "%profiles%\%%u\AppData\Local\Microsoft\Windows\INetCookies"
+
+cls
+title Deletando %%u RDP TEMP. . .
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Terminal Server Client\Cache" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Terminal Server Client\Cache" cd "%profiles%\%%u\AppData\Local\Microsoft\Terminal Server Client\Cache"
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Terminal Server Client\Cache" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Microsoft\Terminal Server Client\Cache" rmdir /s /q "%profiles%\%%u\AppData\Local\Microsoft\Terminal Server Client\Cache"
+
+cls
+title Deletando %%u OPERA TEMP. . .
+if exist "%profiles%\%%u\AppData\Local\Opera Software\Opera Next\Cache" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Opera Software\Opera Next\Cache" cd "%profiles%\%%u\AppData\Local\Opera Software\Opera Next\Cache"
+if exist "%profiles%\%%u\AppData\Local\Opera Software\Opera Next\Caches" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Opera Software\Opera Next\Cache" rmdir /s /q "%profiles%\%%u\AppData\Local\Opera Software\Opera Next\Cache"
+
+
+cls
+title Deletando %%u VIVALDI TEMP. . .
+if exist "%profiles%\%%u\AppData\Local\Vivaldi\User Data\Default\Cache" echo Deletando....
+if exist "%profiles%\%%u\AppData\Local\Vivaldi\User Data\Default\Cache" cd "%profiles%\%%u\AppData\Local\Vivaldi\User Data\Default\Cache"
+if exist "%profiles%\%%u\AppData\Local\Vivaldi\User Data\Default\Cache" del *.* /F /S /Q /A: R /A: H /A: A
+if exist "%profiles%\%%u\AppData\Local\Vivaldi\User Data\Default\Cache" rmdir /s /q "%profiles%\%%u\AppData\Local\Vivaldi\User Data\Default\Cache"
+)
+cls
+goto end
+:end
+cls
+echo Aguarde estamos verificando...
+timeout 10
+msg /v /w * Todos os arquivos temporarios foram Deletados.
+goto menu
+
+:opcao10
+echo =============================================
+echo *    Reiniciar o Computador em 1 Minuto     *
+echo *    Aguarde...                             *
+echo =============================================
+shutdown /r /t 0 "Reiniciando..."
+exit
+
+:opcao11
+echo =========================
+echo *    Limpar Lixeira     *
+echo =========================
+rd /S /Q c:\$Recycle.bin
+echo Limpando...
+timeout 5
+goto menu
+
+:opcao12
+echo ======================================
+echo *    Limpar Arquivos Temporarios     *
+echo ======================================
+DEL /F/S/Q %WINDIR%\*.TMP  
+DEL /F/S/Q %WINDIR%\TEMP\*.*  
+FOR /D %%d IN ("%WINDIR%\TEMP\*.*") DO RD /S /Q "%%d"  
+DEL /F/S/Q %WINDIR%\Prefetch\*.*
+DEL /S /Q /F "%TEMP%\*.*"  
+FOR /D %%d IN ("%TEMP%\*.*") DO RD /S /Q "%%d"
+del /q "%temp%"
+DEL /S /Q /F "%userprofile%\Recent\*.*"
+msg/time:3 /w /v * "Limpeza Concluida..."
+goto menu
+
+:opcao13
+echo =============================================
+echo *      Limpeza de Disco (Visual)            *
+echo =============================================
+cleanmgr
+goto menu
+
+:opcao14
+echo =============================================
+echo * Limpeza e Reparo do Windows               *
+echo * Aguarde... Estamos analisando Windows     *
+echo =============================================
+sfc /scannow
+DISM /Online /Cleanup-Image /ScanHealth
+echo =============================================
+echo *    Deseja que seja Reparado o Windows     *
+echo *    Lembre-se isto pode demorar um pouco   *
+echo =============================================
+
+set /p op=[S] Sim [N] Nao.: 
+if %op% equ S goto op1
+if %op% equ s goto op1
+if %op% equ N goto op2
+if %op% equ n goto op2
+
+:op1
+cls
+DISM /Online /Cleanup-Image /CheckHealth
+pause >nul
+echo Windows foi Reparado. Caso apresente Erro Contate o Suporte Tecnico.
+pause
+goto menu
+
+:op2
+cls
+goto menu
+
+:opcao15
+echo =============================================
+echo * Remocao Software Mal-intensionado         *
+echo =============================================
+mrt
+timeout 3
+goto menu
+
+:opcao16
+echo =============================================
+echo * Exibir Softwares instalado *
+echo =============================================
+appwiz.cpl
+timeout 3
+goto menu
+
+:opcao17
+cls
+echo ==============================
+echo *   Checar o Disco C Status  *
+echo ==============================
+chkdsk
+pause
+goto menu
+
+:opcao18
+cls
+echo ==============================
+echo *   Restabelecer conexão     *
+echo ==============================
+ipconfig /release > C:\users\%username%\Desktop\conexao.txt
+ipconfig /flushdns >> C:\users\%username%\Desktop\conexao.txt
+ipconfig /renew >> C:\users\%username%\Desktop\conexao.txt
+ipconfig /registerdns >> C:\users\%username%\Desktop\conexao.txt
+nbtstat -rr >> C:\users\%username%\Desktop\conexao.txt
+netsh int ip reset all >> C:\users\%username%\Desktop\conexao.txt
+netsh winsock reset >> C:\users\%username%\Desktop\conexao.txt
+ping 8.8.8.8 >> C:\users\%username%\Desktop\conexao.txt
+timeout 5 >nul
+goto menu
+
+:opcao19
+cls
+echo ================================
+echo *  Voce optou em nos conhecer  *
+echo *  Obrigado deixe com nosco    *
+echo * Te levaremos ao nosso Site   *
+echo ================================
+echo Carregando...
+timeout 3 >nul
+start http://www.sisconsult.com.br
+timeout 1 >nul
+goto menu
+
+:opcao20
+cls
+echo =========================
+echo *    Sair     *
+echo =========================
+msg/time:2 /w * "Saindo... Obrigado"
+exit
+
+:opcao100
+cls
+pkgmgr /iu:"TelnetClient"
+telnet towel.blinkenlights.nl
+pause >nul
+exit
